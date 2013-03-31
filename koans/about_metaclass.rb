@@ -17,29 +17,29 @@ class AboutMetaclass < EdgeCase::Koan
   end
 
   def test_class_of_an_object
-    assert_equal __, @truck.class
+    assert_equal MailTruck, @truck.class
   end
 
   def test_class_of_a_class
-    assert_equal __, MailTruck.class
+    assert_equal Class, MailTruck.class
   end
 
   def test_object_is_a_storage_for_variables
-    assert_equal __, @truck.driver
+    assert_equal "Harold", @truck.driver
   end
 
   def test_object_can_hold_any_other_instance_variables
     @truck.instance_variable_set("@speed", 45)
-    assert_equal __, @truck.instance_variable_get("@speed")
+    assert_equal 45, @truck.instance_variable_get("@speed")
   end
 
   def test_attr_accessor_defines_reader_and_writer
     @truck.driver = 'Kumar'
-    assert_equal __, @truck.driver
+    assert_equal 'Kumar', @truck.driver
   end
 
   def test_classes_store_methods
-    assert_equal __, MailTruck.instance_methods.include?(:driver)
+    assert_equal true, MailTruck.instance_methods.include?(:driver)
   end
 
 =begin
@@ -55,26 +55,26 @@ BasicObject
 =end
 
   def test_class_is_an_object
-    assert_equal __, Class.is_a?(Object)
-    assert_equal __, Class.superclass
-    assert_equal __, Class.superclass.superclass
+    assert_equal MailTruck.is_a?(Object), Class.is_a?(Object)
+    assert_equal Module, Class.superclass
+    assert_equal MailTruck.superclass, Class.superclass.superclass
   end
 
   def test_class_has_object_id
-    assert_equal __, @truck.object_id > 0
-    assert_equal __, MailTruck.object_id > 0
+    assert_equal true, @truck.object_id > 0
+    assert_equal true, MailTruck.object_id > 0
   end
 
   def test_Object_class_is_Class
-    assert_equal __, Object.class
+    assert_equal Class, Object.class
   end
 
   def test_Object_inherits_from_Basic_Object
-    assert_equal __, Object.superclass
+    assert_equal BasicObject, Object.superclass
   end
 
   def test_Basic_Object_sits_at_the_very_top
-    assert_equal __, BasicObject.superclass
+    assert_equal nil, BasicObject.superclass
   end
 
   class MailTruck
@@ -84,7 +84,7 @@ BasicObject
   end
 
   def test_metaclass_is_a_class_which_an_object_uses_to_redefine_itself
-    assert_equal __, @truck.has_mail?
+    assert_equal false, @truck.has_mail?
   end
 
   class ::Class
@@ -94,8 +94,8 @@ BasicObject
   end
 
   def test_metaclass_is_a_class_which_even_Class_uses_to_redefine_itself
-    assert_equal __, Class.is_everything_an_object?
-    assert_equal __, MailTruck.is_everything_an_object?
+    assert_equal true, Class.is_everything_an_object?
+    assert_equal true, MailTruck.is_everything_an_object?
   end
 
   def test_singleton_methods_are_defined_only_for_that_instance
@@ -105,7 +105,7 @@ BasicObject
       "Honk!Honk!"
     end
 
-    assert_equal __, red_truck.honk
+    assert_equal "Honk!Honk!", red_truck.honk
     assert_raises(NoMethodError) do
       blue_truck.honk
     end
@@ -122,16 +122,16 @@ BasicObject
 =end
 
   def test_metaclass_sits_between_object_and_class
-    assert_equal __, @truck.metaclass.superclass
+    assert_equal MailTruck, @truck.metaclass.superclass
   end
 
   def test_singleton_methods_are_defined_in_metaclass
     def @truck.honk
       "Honk"
     end
-    assert_equal __, @truck.honk
-    assert_equal __, @truck.metaclass.instance_methods.include?(:honk)
-    assert_equal __, @truck.singleton_methods.include?(:honk)
+    assert_equal "Honk", @truck.honk
+    assert_equal true, @truck.metaclass.instance_methods.include?(:honk)
+    assert_equal true, @truck.singleton_methods.include?(:honk)
   end
 
   class ::Object
@@ -142,12 +142,12 @@ BasicObject
 
   def test_class_lt_lt_opens_up_metaclass
     klass = class << @truck ; self ; end
-    assert_equal __, klass == @truck.metaclass
+    assert_equal true, klass == @truck.metaclass
   end
 
   def test_metaclass_can_have_metaclass_ad_infinitum
-    assert_equal __, @truck.metaclass.metaclass.nil?
-    assert_equal __, @truck.metaclass.metaclass.metaclass.nil?
+    assert_equal false, @truck.metaclass.metaclass.nil?
+    assert_equal false, @truck.metaclass.metaclass.metaclass.nil?
   end
 
   def test_metaclass_of_a_metaclass_does_not_affect_the_original_object
