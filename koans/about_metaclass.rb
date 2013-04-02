@@ -160,8 +160,8 @@ BasicObject
       "Honk Honk"
     end
 
-    assert_equal __, @truck.honk
-    assert_equal __, @truck.meta_eval { honk_honk }
+    assert_equal "Honk", @truck.honk
+    assert_equal "Honk Honk", @truck.meta_eval { honk_honk }
     assert_raises(NoMethodError) do
       @truck.honk_honk
     end
@@ -193,7 +193,7 @@ BasicObject
     MailTruck.add_truck(red_truck)
     MailTruck.add_truck(blue_truck)
 
-    assert_equal __, MailTruck.count_trucks
+    assert_equal 2, MailTruck.count_trucks
   end
 
   class MailTruck
