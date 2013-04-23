@@ -216,11 +216,11 @@ BasicObject
     MailTruck.add_a_truck(blue_truck)
     MailTruck.add_a_truck(green_truck)
 
-    assert_equal __, MailTruck.total_trucks
+    assert_equal 3, MailTruck.total_trucks
   end
 
   def test_class_variable_and_class_instance_variable_are_not_the_same
-    assert_equal __, MailTruck.count_trucks == MailTruck.total_trucks
+    assert_equal false, MailTruck.count_trucks == MailTruck.total_trucks
   end
 
   class MailTruck
@@ -231,12 +231,12 @@ BasicObject
 
   def test_only_class_variables_can_be_accessed_by_instances_of_class
     MailTruck.add_truck(@truck)
-    assert_equal __, @truck.say_hi
+    assert_equal "Hi! I'm one of 3 trucks", @truck.say_hi
   end
 
   def test_class_methods_are_defined_in_metaclass_of_class
-    assert_equal __, MailTruck.metaclass.instance_methods.include?(:add_truck)
-    assert_equal __, MailTruck.metaclass.instance_methods.include?(:add_a_truck)
+    assert_equal true, MailTruck.metaclass.instance_methods.include?(:add_truck)
+    assert_equal true, MailTruck.metaclass.instance_methods.include?(:add_a_truck)
   end
 
   class MailTruck
